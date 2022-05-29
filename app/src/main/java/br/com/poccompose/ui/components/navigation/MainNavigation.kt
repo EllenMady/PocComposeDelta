@@ -4,7 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import br.com.poccompose.ui.components.NavBarOptions
 import br.com.poccompose.ui.screen.*
-
+/*
+    Main routes for Navigation Bottom
+ */
 fun NavGraphBuilder.addMainNavigationGraph(){
     composable(
         route = NavBarOptions.Products.route
