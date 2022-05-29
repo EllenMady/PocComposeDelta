@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import br.com.poccompose.ui.components.AppMenuItem
 
 
 @Composable
@@ -17,9 +18,13 @@ fun MenuScreen(
     Box(modifier.fillMaxSize()){
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.fillMaxSize()
         ) {
             Text(text = "Menu")
+            AppMenuItem(text = "Option One")
+            AppMenuItem(text = "Option Two")
+            AppMenuItem(text = "Option Three")
         }
     }
 }

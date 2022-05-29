@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PocCompose</string>
+    <string name="client_register_title">Cadastro de Clientes</string>
+    <string name="nav_bottom_products">Produtos</string>
+    <string name="nav_bottom_sales">Vendas</string>
+    <string name="nav_bottom_clients">Clientes</string>
+    <string name="nav_bottom_reports">Relatórios</string>
+    <string name="nav_bottom_menu">Menu</string>
 </resources>

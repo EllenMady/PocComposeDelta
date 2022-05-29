@@ -2,14 +2,16 @@ package br.com.poccompose.ui.components
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -47,13 +49,16 @@ fun RowScope.AddItem(
 ){
     BottomNavigationItem(
         label = {
-                Text(text = barOption.title)
+                Text(
+                    text = stringResource(id = barOption.title),
+                    fontSize = 10.sp
+                )
         },
         selected = currentDestination.hierarchy.any{ navDestination ->
            navDestination.route == barOption.route
         },
         icon = {
-               Icon(imageVector = barOption.icon, contentDescription = barOption.title)
+               Icon(imageVector = barOption.icon, contentDescription = stringResource(id = barOption.title))
         },
         onClick = {
             /*
