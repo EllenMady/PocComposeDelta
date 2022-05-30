@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,7 +18,20 @@ import br.com.poccompose.ui.components.AppButtonSample
 fun ClientScreen(
     modifier: Modifier = Modifier
 ){
-    var count by remember {
+    /*
+    No compose, um estado é tudo que pode mudar em uma tela
+     */
+    /*
+    Use o remember caso voce queira que o estado persista durante as recomposicoes
+     */
+    var countNoSave by remember {
+        mutableStateOf(0)
+    }
+    /*
+    Caso voce queira que o estado persista mesmo que a tela mude de posicao (paisagem e retrato),
+    devera usar o rememberSaveable, que ira persistir a info mesmo com a reconstrucao da tela
+     */
+    var countSave by rememberSaveable {
         mutableStateOf(0)
     }
     Box(modifier.fillMaxSize()){
@@ -25,18 +39,21 @@ fun ClientScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Clientes $count")
+            Text(text = "Clientes no save $countNoSave")
+            Text(text = "Clientes with save $countSave")
             AppButtonSample(text = "Enable"){
-                count++
+                countNoSave++
+                countSave++
             }
             AppButtonSample(text = "Disabled", enabled = false){
-                count++
+                countNoSave++
+                countSave++
             }
 
-            Button(onClick = { count++ }) {
+            Button(onClick = { countNoSave++;countSave++ }) {
                 Text(text = "Click here")
             }
-            Button(onClick = { count++ },enabled = if(count > 10) false else true) {
+            Button(onClick = { countNoSave++;countSave++ },enabled = if(countNoSave > 10) false else true) {
                 Text(text = "Click here")
             }
         }
