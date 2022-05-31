@@ -11,11 +11,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.poccompose.ui.components.AppButtonSample
+import br.com.poccompose.viewmodels.ClientViewModel
 
 
 @Composable
 fun ClientScreen(
+    viewModel: ClientViewModel = viewModel(),
     modifier: Modifier = Modifier
 ){
     /*
