@@ -9,8 +9,8 @@ import dagger.hilt.android.HiltAndroidApp
 class PocComposeApplication : Application() {
     companion object{
         private fun getInstance() = PocComposeApplication()
-        fun getString(@StringRes id: Int){
-            getInstance().resources.getString(id)
+        fun getString(@StringRes id: Int): String{
+            return getInstance().resources.getString(id)
         }
     }
 }

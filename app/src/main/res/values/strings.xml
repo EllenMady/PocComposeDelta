@@ -27,4 +27,6 @@
     <string name="thu">thu</string>
     <string name="fri">fri</string>
     <string name="sat">sat</string>
+    <!-- -->
+    <string name="date_util_de_extenso">DateUtil_de_extenso</string>
 </resources>
