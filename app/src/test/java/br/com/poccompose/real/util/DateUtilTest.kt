@@ -1,11 +1,20 @@
 package br.com.poccompose.real.util
 
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.junit.MockitoJUnitRunner
+import java.util.*
 
+@RunWith(MockitoJUnitRunner::class)
 class DateUtilTest {
+
+    @Mock
+    lateinit var mock: DateUtil
 
     @Test
     fun should_test_formater_to_filter_reports(){
@@ -154,10 +163,62 @@ class DateUtilTest {
     }
 
     @Test
-    fun test(){
+    fun should_test_getNameLast12Months(){
+        val expectedMonths = listOf(
+            "may", "apr", "mar", "fev", "dec", "nov",
+            "oct", "sept", "aug", "july", "june", "may"
+        )
+        val expectedMonthsInt = listOf(
+            4, 3, 2, 1, 11, 10, 9, 8, 7, 6, 5, 4
+        )
+        //val mock = Mockito.mock(DateUtil::class.java)
         Mockito.mockStatic(DateUtil::class.java).use {
-            it.`when`<List<String>> { DateUtil.getMonthListAsString() }.thenReturn(getMockMonthList())
-            //DateUtil.getNameLast12Months()
+            val date = DateUtil.getDateTime(2022,5,31,14,30,5)
+            it.`when`<List<String>> { mock.getMonthListAsString() }.thenReturn(getMockMonthList())
+            it.`when`<Months> { mock.getNameLast12Months(date) }.thenCallRealMethod()
+            it.`when`<Int> { mock.getFromDate(date,Calendar.MONTH) }.thenCallRealMethod()
+            val result = mock.getNameLast12Months(date = date)
+            assertArrayEquals(expectedMonths.toTypedArray(),result.months.toTypedArray())
+            assertArrayEquals(expectedMonthsInt.toTypedArray(),result.monthsInt.toTypedArray())
+        }
+    }
+
+    @Test
+    fun should_test_getNameLast7Days(){
+        val expectedDays = listOf(
+            "tue", "mon", "sun", "sat", "fri", "thu", "wed"
+        )
+        val expectedDaysAsInt = listOf(
+            3, 2, 1, 7, 6, 5, 4
+        )
+        Mockito.mockStatic(DateUtil::class.java).use {
+            val date = DateUtil.getDateTime(2022,5,31,14,30,5)
+            it.`when`<List<String>> { mock.getDaysOfWeekListAsString() }.thenReturn(getMockDaysList())
+            it.`when`<Days> { mock.getNameLast7Days(date) }.thenCallRealMethod()
+            it.`when`<Int> { mock.getFromDate(date,Calendar.DAY_OF_WEEK) }.thenCallRealMethod()
+            val days = mock.getNameLast7Days(date)
+            assertArrayEquals(expectedDays.toTypedArray(),days.days.toTypedArray())
+            assertArrayEquals(expectedDaysAsInt.toTypedArray(),days.daysInt.toTypedArray())
+        }
+    }
+
+    @Ignore("See later how to mock parameter any at Mockito")
+    @Test
+    fun should_test_getWeekFromDate(){
+        val date = DateUtil.getDateTime(2022,5,31,14,30,5)
+
+        Mockito.mockStatic(DateUtil::class.java).use {
+            it.`when`<Date> {mock.getCurrentDate()}.thenReturn(date)
+            it.`when`<Period> {mock.getWeekFromDate(date)}.thenCallRealMethod()
+            it.`when`<Int> {mock.getFromDate(date,Calendar.DAY_OF_WEEK)}.thenCallRealMethod()
+            it.`when`<Period> {mock.getWeekFromDate(date)}.thenCallRealMethod()
+            val period = mock.getWeekFromDate(date)
+            val actualInitialDate = DateUtil.formatDateToString(period.initialDate,DateUtil.YYYY_MM_DD)
+            val actualFinalDate = DateUtil.formatDateToString(period.finalDate,DateUtil.YYYY_MM_DD)
+            val expectedInitialDate = "2022-05-31"
+            val expectedFinalDate = "2022-05-31"
+            assertEquals(expectedInitialDate,actualInitialDate)
+            assertEquals(expectedFinalDate,actualFinalDate)
         }
     }
 
@@ -167,6 +228,14 @@ class DateUtilTest {
             "july","aug","sept","oct","nov","dec"
         )
     }
+
+    private fun getMockDaysList(): List<String>{
+        return listOf(
+            "sun","mon","tue","wed","thu","fri","sat"
+        )
+    }
+
+
 
 
 }

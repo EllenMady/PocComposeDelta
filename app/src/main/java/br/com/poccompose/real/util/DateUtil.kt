@@ -156,7 +156,7 @@ object DateUtil {
 
     fun getDate(numberOfYear:Int?,numberOfMonth:Int?,numberOfDay:Int?): Date{
         if(numberOfYear == null || numberOfMonth == null || numberOfDay == null){
-            return Date()
+            return getCurrentDate()
         }
         return getDateTime(numberOfYear,numberOfMonth,numberOfDay,0,0,0)
     }
@@ -188,18 +188,18 @@ object DateUtil {
     fun formatResponseJson(dateString:Any?): Date?{
         return dateString?.let{
             //Nao fazer
-            Date()
+            getCurrentDate()
         }
     }
 
     fun formatResponseJsonDateServerRest(dateString:Any?): Date?{
         return dateString?.let {
             //Nao fazer
-            Date()
+            getCurrentDate()
         }
     }
 
-    private fun getFromDate(date: Date, field: Int): Int {
+    internal fun getFromDate(date: Date, field: Int): Int {
         val calendar= Calendar.getInstance()
         calendar.time = date
         return calendar.get(field)
@@ -211,11 +211,11 @@ object DateUtil {
         var currentMonth = getFromDate(date,Calendar.MONTH)
         var monthsAdd = 0
         while (monthsAdd < 12){
-            months.add(getMonthListAsString()[currentMonth - 1])
+            months.add(getMonthListAsString()[currentMonth])
             monthsInt.add(currentMonth)
             currentMonth -= 1
             if (currentMonth == 0) {
-                currentMonth = 12
+                currentMonth = 11
             }
             monthsAdd += 1
         }
@@ -228,7 +228,7 @@ object DateUtil {
     fun getNameLast7Days(date:Date): Days{
         val days = mutableListOf<String>()
         val daysInt= mutableListOf<Int>()
-        var currentDay = getFromDate(date,Calendar.MONTH)
+        var currentDay = getFromDate(date,Calendar.DAY_OF_WEEK)
         var dayAdd = 0
         while(dayAdd < 7){
             days.add(getDaysOfWeekListAsString()[currentDay - 1])
@@ -245,37 +245,37 @@ object DateUtil {
         )
     }
 
+    fun getCurrentDate() = Date()
     fun getWeekFromDate(date:Date): Period{
         val currentDay = getFromDate(date,Calendar.DAY_OF_WEEK)
-        var dateInitial = Date()
-        var dateFinal = Date()
-
+        var dateInitial = getCurrentDate()
+        var dateFinal = getCurrentDate()
         when (currentDay) {
-            1 -> {
+            Calendar.SUNDAY -> {
                 dateInitial = addToDate(date = date, day = -6)
                 dateFinal = date
             }
-            2 -> {
+            Calendar.MONDAY -> {
                 dateInitial = date
                 dateFinal = addToDate(date = date, day= 6)
             }
-            3 -> {
+            Calendar.TUESDAY -> {
                 dateInitial = addToDate(date= date, day= -1)
                 dateFinal = addToDate(date= date, day= 5)
             }
-            4 -> {
+            Calendar.WEDNESDAY -> {
                 dateInitial = addToDate(date= date, day= -2)
                 dateFinal = addToDate(date= date, day= 4)
             }
-            5 -> {
+            Calendar.THURSDAY -> {
                 dateInitial = addToDate(date= date, day= -3)
                 dateFinal = addToDate(date= date, day= 3)
             }
-            6 -> {
+            Calendar.FRIDAY -> {
                 dateInitial = addToDate(date= date, day= -4)
                 dateFinal = addToDate(date= date, day= 2)
             }
-            7 -> {
+            Calendar.SATURDAY -> {
                 dateInitial = addToDate(date= date, day= -5)
                 dateFinal = addToDate(date= date, day= 1)
             }
