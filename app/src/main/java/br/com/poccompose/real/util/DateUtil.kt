@@ -1,9 +1,11 @@
 package br.com.poccompose.real.util
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import br.com.poccompose.real.enums.PeriodReportEnum
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.temporal.TemporalAdjusters
 import java.util.*
 import br.com.poccompose.R.string as RStr
 
@@ -19,6 +21,7 @@ object DateUtil {
     private const val DATE_EMPTY = ""
     private const val SQLITE_NULL = "NULL"
     const val YYYY_MM_DD = "yyyy-MM-dd"
+    const val DD_MM_YYYY = "dd/MM/yyyy"
     const val DD_MM_YYYY_HH_MM_SS = "dd/MM/yyyy HH:mm:ss"
 
     private val nameMonths =
@@ -303,6 +306,122 @@ object DateUtil {
             }
         }
         return calendar.time
+    }
+
+    fun getLastSevenPeriod(date: Date) : Period{
+        return Period(
+            initialDate = addToDate(date= date, day= -7),
+            finalDate = date
+        )
+    }
+
+    fun getThisMonthPeriod(date: Date) : Period{
+        val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val localIni = localDate.withDayOfMonth(1)
+        val localFin = localDate.with(TemporalAdjusters.lastDayOfMonth())
+        return Period(
+            initialDate = localIni.toDate(),
+            finalDate = localFin.toDate()
+        )
+    }
+
+    fun LocalDate.toDate() : Date{
+        return Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
+    }
+
+    fun getDates(period: PeriodReportEnum): Period?{
+        //Data atual 02/06/2022
+        var dateInitial:Date?
+        var dateFinal:Date?
+
+        if(period == PeriodReportEnum.TODAY){
+            dateInitial = getCurrentDate()
+            dateFinal = getCurrentDate()
+        }
+
+        if(period == PeriodReportEnum.LAST_SEVEN){
+            //ini: 26/05/2022 - fim: 02/06/2022
+//            dateInitial = addToDate(date= getCurrentDate(), day= -7)
+//            dateFinal = getCurrentDate()
+            val p1 = getLastSevenPeriod(getCurrentDate())
+        }
+
+        if(period == PeriodReportEnum.THIS_MONTH){
+            //ini: 01/06/2022  ini: 30/06/2022 tras o mes corrente inteiro
+            //dateInitial = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
+            //dateInitial = getDate(from: dateComponents([.year, .month], from: startOfDay(for: Date())))!
+            //dateFinal = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: dateInitial ?? Date())!
+            val p1 = getThisMonthPeriod(getCurrentDate())
+        }
+
+        if(period == PeriodReportEnum.INFORMED){
+            dateInitial = null
+            dateFinal = null
+        }
+
+        if(period == PeriodReportEnum.YESTERDAY){
+            //01/06/2022 01/06/2022 - ontem
+            dateInitial = addToDate(date= getCurrentDate(), day= -1)
+            dateFinal = addToDate(date= getCurrentDate(), day= -1)
+        }
+
+        if(period == PeriodReportEnum.LAST_THREE_MONTH){
+            //01/04/2022   30/06/2022   Sao os ultimos 3 meses incluindo o mes atual e os dois meses passados
+            //var dateInitialAux = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
+            //dateInitialAux = Calendar.current.date(byAdding: DateComponents(month: -2), to: dateInitialAux)!
+
+            //var firstDayOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
+           // firstDayOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth )!
+
+            //dateInitial = dateInitialAux
+            //dateFinal = firstDayOfMonth
+        }
+
+        if(period == PeriodReportEnum.LAST_TWELVE_MONTH){
+            //01/07/2021     30/06/2022 - inicia no primeiro dia de 11 meses atras e acaba no ultimo dia do mes corrente
+            //var dateInitialAux = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
+            //dateInitialAux = Calendar.current.date(byAdding: DateComponents(month: -11), to: dateInitialAux)!
+
+            //var firstDayOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
+            //firstDayOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth )!
+
+            //dateInitial = dateInitialAux
+           // dateFinal = firstDayOfMonth
+        }
+
+        if(period == PeriodReportEnum.THIS_YEAR){
+            //01/01/2022    31/12/2022 Inicia no primeiro dia do ano corrente e finaliza no ultimo dia do ano corrente
+            //val year = getYear(getCurrentDate())
+            //    let firstOfNextYear = Calendar.current.date(from: DateComponents(year: year + 1, month: 1, day: 1))
+            //let lastOfYear = Calendar.current.date(byAdding: .day, value: -1, to: firstOfNextYear ?? Date())
+
+
+
+
+            //let yearInitial = Calendar.current.component(.year, from: Date())
+           // let firstOfNextYearInitial = Calendar.current.date(from: DateComponents(year: yearInitial,month: 1, day: 1))
+
+
+            //dateInitial = firstOfNextYearInitial
+            //dateFinal = lastOfYear
+
+
+
+
+        }
+
+
+       // return (dateInitial,dateFinal)
+        return null
+
+    }
+
+    fun firstDayOfThisMonth(date: Date) : Int{
+        return 0
+    }
+
+    fun lastDayOfThisMonth(date: Date) : Int{
+        return 0
     }
 }
 

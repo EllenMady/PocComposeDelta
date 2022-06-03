@@ -235,6 +235,24 @@ class DateUtilTest {
         )
     }
 
+    @Test
+    fun should_test_getLastSevenPeriod(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val period = DateUtil.getLastSevenPeriod(date)
+        val dateIniExpected = "26/05/2022"
+        val dateFinExpected = "02/06/2022"
+        val dateIniActual = DateUtil.formatDateToString(period.initialDate, DateUtil.DD_MM_YYYY)
+        val dateFinActual = DateUtil.formatDateToString(period.finalDate, DateUtil.DD_MM_YYYY)
+        assertEquals(dateIniExpected,dateIniActual)
+        assertEquals(dateFinExpected,dateFinActual)
+    }
+
+    @Test
+    fun test(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val period = DateUtil.getThisMonthPeriod(date = date)
+        print(period)
+    }
 
 
 

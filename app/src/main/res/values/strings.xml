@@ -29,4 +29,5 @@
     <string name="sat">sat</string>
     <!-- -->
     <string name="date_util_de_extenso">DateUtil_de_extenso</string>
+    <string name="administrator">Administrator</string>
 </resources>
