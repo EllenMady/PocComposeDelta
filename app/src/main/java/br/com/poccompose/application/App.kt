@@ -5,10 +5,10 @@ import androidx.annotation.StringRes
 
 import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
-class PocComposeApplication : Application() {
+//@HiltAndroidApp
+open class App : Application() {
     companion object{
-        private fun getInstance() = PocComposeApplication()
+        fun getInstance() = App()
         fun getString(@StringRes id: Int): String{
             return getInstance().resources.getString(id)
         }

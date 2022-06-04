@@ -1,6 +1,4 @@
 
-n
->app/src/main/java/br/com/poccompose/ui/screen/ProductScreen.kt,7/1/719eabbcd2929e34799d152c5b15c3ef470a1988
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
@@ -16,11 +14,7 @@ d
 4app/src/main/java/br/com/poccompose/ui/NotesToSee.kt,5/d/5d9f4f7c9cc68b5b7e9112ad085a76814a562fc1
 >
 app/.gitignore,5/1/51e1c5d383dfaa35e0e7e5873a0a99355a86880f
-€
-Papp/src/main/java/br/com/poccompose/ui/components/navigation/MainDestinations.kt,c/b/cb90a2ad8506b39d3b3ab9b986b8babfc6a89f90
 t
 Dapp/src/main/java/br/com/poccompose/ui/components/NavClientRoutes.kt,7/0/7071bbef8d9a2edfc4b2c76950fb369030a52ef3
 t
 Dapp/src/main/java/br/com/poccompose/ui/components/AppButtonSemple.kt,f/5/f532be68b864aaedb23156fa574712fb39654b70
-€
-Papp/src/main/java/br/com/poccompose/ui/components/navigation/ClientNavigation.kt,e/c/ec40b44da004469cb29cea0f0128266f0f21883d

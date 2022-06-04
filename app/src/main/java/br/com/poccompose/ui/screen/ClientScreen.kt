@@ -12,13 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.poccompose.real.util.PreferencesUtil
 import br.com.poccompose.ui.components.AppButtonSample
 import br.com.poccompose.viewmodels.ClientViewModel
 
 
 @Composable
 fun ClientScreen(
-    viewModel: ClientViewModel = viewModel(),
+    viewModel: ClientViewModel,
     modifier: Modifier = Modifier
 ){
     /*
@@ -56,8 +57,15 @@ fun ClientScreen(
             Button(onClick = { countNoSave++;countSave++ }) {
                 Text(text = "Click here")
             }
-            Button(onClick = { countNoSave++;countSave++ },enabled = if(countNoSave > 10) false else true) {
+            Button(onClick = { countNoSave++;countSave++ },enabled = countNoSave <= 10) {
                 Text(text = "Click here")
+            }
+
+            Text(text = viewModel.getPrefExample())
+            Button(onClick = {
+                viewModel.testPreferences()
+            }) {
+                Text(text = "Save preferences")
             }
         }
     }
@@ -66,5 +74,5 @@ fun ClientScreen(
 @Preview
 @Composable
 fun ClientsPreview(){
-    ClientScreen()
+    ClientScreen(viewModel())
 }

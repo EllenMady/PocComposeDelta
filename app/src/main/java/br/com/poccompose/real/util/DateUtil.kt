@@ -1,5 +1,6 @@
 package br.com.poccompose.real.util
 
+
 import br.com.poccompose.real.enums.PeriodReportEnum
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -25,22 +26,24 @@ object DateUtil {
     const val DD_MM_YYYY_HH_MM_SS = "dd/MM/yyyy HH:mm:ss"
 
     private val nameMonths =
-        LocalUtil.let {
             listOf(
-                it.getString(RStr.jan) , it.getString(RStr.fev), it.getString(RStr.mar),
-                it.getString(RStr.apr), it.getString(RStr.may), it.getString(RStr.june),
-                it.getString(RStr.july), it.getString(RStr.aug), it.getString(RStr.sept),
-                it.getString(RStr.oct), it.getString(RStr.nov), it.getString(RStr.dec)
+                getString(RStr.jan) , getString(RStr.fev), getString(RStr.mar),
+                getString(RStr.apr), getString(RStr.may), getString(RStr.june),
+                getString(RStr.july), getString(RStr.aug), getString(RStr.sept),
+                getString(RStr.oct), getString(RStr.nov), getString(RStr.dec)
             )
-        }
+
 
     private val nameDays =
-        LocalUtil.let {
             listOf(
-                it.getString(RStr.sun),it.getString(RStr.mon),it.getString(RStr.tue),it.getString(RStr.wed),
-                it.getString(RStr.thu),it.getString(RStr.fri),it.getString(RStr.sat),
+                getString(RStr.sun),getString(RStr.mon),getString(RStr.tue),getString(RStr.wed),
+                getString(RStr.thu),getString(RStr.fri),getString(RStr.sat)
             )
-        }
+
+
+    internal fun getString(idRes: Int): String{
+       return LocalUtil.getString(idRes)
+    }
 
     fun getMonthListAsString() : List<String>{
         return nameMonths
@@ -56,10 +59,10 @@ object DateUtil {
         }
     }
     private fun getCurrentTimeZone() = TimeZone.getDefault()
-    private fun getExtenso() = LocalUtil.getString(RStr.date_util_de_extenso)
+    private fun getExtenso() = getString(RStr.date_util_de_extenso)
     fun formatDateToReceipt(date: Date?, language: String? = null) : String{
         return date?.let { it ->
-            val locale = language ?: Locale.getDefault().language
+            val locale = language ?: LocalUtil.getLanguage()
             if(locale == PT || locale == ES){
                 "${formatDateToString(date = it,format = DAY_FORMAT)}${getExtenso()}"
                     .plus("${formatDateToString(date = it,format = M_FORMAT)}${getExtenso()}${formatDateToString(date = it,format = YEAR_FORMAT)}")
@@ -316,104 +319,137 @@ object DateUtil {
     }
 
     fun getThisMonthPeriod(date: Date) : Period{
-        val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-        val localIni = localDate.withDayOfMonth(1)
-        val localFin = localDate.with(TemporalAdjusters.lastDayOfMonth())
         return Period(
-            initialDate = localIni.toDate(),
-            finalDate = localFin.toDate()
+            initialDate = getFirstDate(date),
+            finalDate = getLastDate(date)
         )
     }
 
-    fun LocalDate.toDate() : Date{
+    fun getFirstDate(date: Date): Date{
+        val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        return localDate.withDayOfMonth(1).toDate()
+    }
+
+    fun getLastDate(date: Date): Date{
+        val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        return localDate.with(TemporalAdjusters.lastDayOfMonth()).toDate()
+    }
+
+    fun getYesterdayPeriod(date: Date): Period{
+        return Period(
+            initialDate = addToDate(date= date, day= -1),
+            finalDate = addToDate(date= date, day= -1)
+        )
+    }
+
+    fun getLastMonths(numberOfMonths: Int, date: Date): Period{
+        val dateMont = getFromDate(date,Calendar.MONTH) + 1
+        var initialDate = date
+        var finalDate = date
+        for (month in 1..numberOfMonths){
+            val dateResult = setForADate(DateComponents(month = dateMont - month),date)
+            if(month == 1){
+                finalDate = getLastDate(dateResult)
+            }
+            if(month == numberOfMonths){
+                initialDate = getFirstDate(dateResult)
+            }
+            date.toInstant()
+        }
+
+        return Period(initialDate, finalDate)
+    }
+
+    fun getFirstDateOfTheYear(date: Date): Date{
+        val calendar = Calendar.getInstance()
+        with(calendar){
+            time = date
+            set(Calendar.DATE,1)
+            set(Calendar.MONTH,0)
+        }
+        return calendar.time
+    }
+
+    fun getLastDateOfTheYear(date: Date): Date{
+        val calendar = Calendar.getInstance()
+        with(calendar){
+            time = date
+            set(Calendar.DATE,31)
+            set(Calendar.MONTH,11)
+        }
+        return calendar.time
+    }
+
+    fun setForADate(dateComponents: DateComponents, date: Date): Date{
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        with(calendar){
+            dateComponents.year?.let {
+                set(Calendar.YEAR,it)
+            }
+            dateComponents.month?.let {
+                set(Calendar.MONTH,it)
+            }
+            dateComponents.day?.let {
+                set(Calendar.DAY_OF_MONTH,it)
+            }
+            dateComponents.hour?.let {
+                set(Calendar.HOUR_OF_DAY,it)
+            }
+            dateComponents.minute?.let {
+                set(Calendar.MINUTE,it)
+            }
+            dateComponents.second?.let {
+                set(Calendar.SECOND,it)
+            }
+            dateComponents.mili?.let {
+                set(Calendar.MILLISECOND,it)
+            }
+        }
+        return calendar.time
+    }
+
+    private fun LocalDate.toDate() : Date{
         return Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
     }
 
-    fun getDates(period: PeriodReportEnum): Period?{
-        //Data atual 02/06/2022
-        var dateInitial:Date?
-        var dateFinal:Date?
+    fun getDates(periodEnum: PeriodReportEnum): Period{
+        return when(periodEnum){
+            PeriodReportEnum.TODAY ->{
+                Period(
+                    initialDate = getCurrentDate(),
+                    finalDate = getCurrentDate()
+                )
+            }
+            PeriodReportEnum.LAST_SEVEN -> {
+                getLastSevenPeriod(getCurrentDate())
+            }
 
-        if(period == PeriodReportEnum.TODAY){
-            dateInitial = getCurrentDate()
-            dateFinal = getCurrentDate()
+            PeriodReportEnum.THIS_MONTH ->{
+                getThisMonthPeriod(getCurrentDate())
+            }
+
+            PeriodReportEnum.YESTERDAY ->{
+                getYesterdayPeriod(getCurrentDate())
+            }
+
+            PeriodReportEnum.LAST_THREE_MONTH ->{
+                getLastMonths(3, getCurrentDate())
+            }
+
+            PeriodReportEnum.LAST_TWELVE_MONTH ->{
+                getLastMonths(12, getCurrentDate())
+            }
+            PeriodReportEnum.THIS_YEAR ->{
+                Period(
+                    initialDate = getFirstDateOfTheYear(getCurrentDate()),
+                    finalDate = getLastDateOfTheYear(getCurrentDate())
+                )
+            }
+            else -> {
+                Period(null,null)
+            }
         }
-
-        if(period == PeriodReportEnum.LAST_SEVEN){
-            //ini: 26/05/2022 - fim: 02/06/2022
-//            dateInitial = addToDate(date= getCurrentDate(), day= -7)
-//            dateFinal = getCurrentDate()
-            val p1 = getLastSevenPeriod(getCurrentDate())
-        }
-
-        if(period == PeriodReportEnum.THIS_MONTH){
-            //ini: 01/06/2022  ini: 30/06/2022 tras o mes corrente inteiro
-            //dateInitial = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
-            //dateInitial = getDate(from: dateComponents([.year, .month], from: startOfDay(for: Date())))!
-            //dateFinal = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: dateInitial ?? Date())!
-            val p1 = getThisMonthPeriod(getCurrentDate())
-        }
-
-        if(period == PeriodReportEnum.INFORMED){
-            dateInitial = null
-            dateFinal = null
-        }
-
-        if(period == PeriodReportEnum.YESTERDAY){
-            //01/06/2022 01/06/2022 - ontem
-            dateInitial = addToDate(date= getCurrentDate(), day= -1)
-            dateFinal = addToDate(date= getCurrentDate(), day= -1)
-        }
-
-        if(period == PeriodReportEnum.LAST_THREE_MONTH){
-            //01/04/2022   30/06/2022   Sao os ultimos 3 meses incluindo o mes atual e os dois meses passados
-            //var dateInitialAux = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
-            //dateInitialAux = Calendar.current.date(byAdding: DateComponents(month: -2), to: dateInitialAux)!
-
-            //var firstDayOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
-           // firstDayOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth )!
-
-            //dateInitial = dateInitialAux
-            //dateFinal = firstDayOfMonth
-        }
-
-        if(period == PeriodReportEnum.LAST_TWELVE_MONTH){
-            //01/07/2021     30/06/2022 - inicia no primeiro dia de 11 meses atras e acaba no ultimo dia do mes corrente
-            //var dateInitialAux = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
-            //dateInitialAux = Calendar.current.date(byAdding: DateComponents(month: -11), to: dateInitialAux)!
-
-            //var firstDayOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: Date())))!
-            //firstDayOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth )!
-
-            //dateInitial = dateInitialAux
-           // dateFinal = firstDayOfMonth
-        }
-
-        if(period == PeriodReportEnum.THIS_YEAR){
-            //01/01/2022    31/12/2022 Inicia no primeiro dia do ano corrente e finaliza no ultimo dia do ano corrente
-            //val year = getYear(getCurrentDate())
-            //    let firstOfNextYear = Calendar.current.date(from: DateComponents(year: year + 1, month: 1, day: 1))
-            //let lastOfYear = Calendar.current.date(byAdding: .day, value: -1, to: firstOfNextYear ?? Date())
-
-
-
-
-            //let yearInitial = Calendar.current.component(.year, from: Date())
-           // let firstOfNextYearInitial = Calendar.current.date(from: DateComponents(year: yearInitial,month: 1, day: 1))
-
-
-            //dateInitial = firstOfNextYearInitial
-            //dateFinal = lastOfYear
-
-
-
-
-        }
-
-
-       // return (dateInitial,dateFinal)
-        return null
-
     }
 
     fun firstDayOfThisMonth(date: Date) : Int{
@@ -436,6 +472,16 @@ data class Days(
 )
 
 data class Period(
-    val initialDate: Date,
-    val finalDate: Date
+    val initialDate: Date? = null,
+    val finalDate: Date? = null
+)
+
+data class DateComponents(
+    val year:Int? = null,
+    val month:Int? = null,
+    val day:Int? = null,
+    val hour: Int? = null,
+    val minute: Int? = null,
+    val second: Int? = null,
+    val mili: Int? = null
 )

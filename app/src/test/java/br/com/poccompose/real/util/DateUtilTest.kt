@@ -241,19 +241,79 @@ class DateUtilTest {
         val period = DateUtil.getLastSevenPeriod(date)
         val dateIniExpected = "26/05/2022"
         val dateFinExpected = "02/06/2022"
-        val dateIniActual = DateUtil.formatDateToString(period.initialDate, DateUtil.DD_MM_YYYY)
-        val dateFinActual = DateUtil.formatDateToString(period.finalDate, DateUtil.DD_MM_YYYY)
+        val dateIniActual = formatDate(period.initialDate!!)
+        val dateFinActual = formatDate(period.finalDate!!)
         assertEquals(dateIniExpected,dateIniActual)
         assertEquals(dateFinExpected,dateFinActual)
     }
 
     @Test
-    fun test(){
+    fun should_test_getThisMonthPeriod(){
         val date = DateUtil.getDateTime(2022,6,2,20,30,5)
         val period = DateUtil.getThisMonthPeriod(date = date)
-        print(period)
+        val expectedInitDate = "01/06/2022"
+        val expectedFinalDate = "30/06/2022"
+        val actualInitDate = formatDate(period.initialDate!!)
+        val actualFinalDate = formatDate(period.finalDate!!)
+        assertEquals(expectedInitDate,actualInitDate)
+        assertEquals(expectedFinalDate,actualFinalDate)
     }
 
+    @Test
+    fun should_test_getYesterdayPeriod(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val period = DateUtil.getYesterdayPeriod(date)
+        val expectedInitDate = "01/06/2022"
+        val expectedFinalDate = "01/06/2022"
+        val actualInitDate = formatDate(period.initialDate!!)
+        val actualFinalDate = formatDate(period.finalDate!!)
+        assertEquals(expectedInitDate,actualInitDate)
+        assertEquals(expectedFinalDate,actualFinalDate)
+    }
 
+    @Test
+    fun should_test_getLastMonths(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val expectedInitDate = "01/04/2022"
+        val expectedFinalDate = "30/06/2022"
+        val period = DateUtil.getLastMonths(3,date)
+        val actualInitDate = formatDate(period.initialDate!!)
+        val actualFinalDate = formatDate(period.finalDate!!)
+        assertEquals(expectedInitDate,actualInitDate)
+        assertEquals(expectedFinalDate,actualFinalDate)
+    }
 
+    @Test
+    fun test_getLastMonths_last_12(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val expectedInitDate = "01/07/2021"
+        val expectedFinalDate = "30/06/2022"
+        val period = DateUtil.getLastMonths(12,date)
+        val actualInitDate = formatDate(period.initialDate!!)
+        val actualFinalDate = formatDate(period.finalDate!!)
+        assertEquals(expectedInitDate,actualInitDate)
+        assertEquals(expectedFinalDate,actualFinalDate)
+    }
+
+    @Test
+    fun test_getFirstDateOfTheYear(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val firstDate = DateUtil.getFirstDateOfTheYear(date)
+        val expectedDate = "01/01/2022"
+        val actualDate = formatDate(firstDate)
+        assertEquals(expectedDate,actualDate)
+    }
+
+    @Test
+    fun test(){
+        val date = DateUtil.getDateTime(2022,6,2,20,30,5)
+        val firstDate = DateUtil.getLastDateOfTheYear(date)
+        val expectedDate = "31/12/2022"
+        val actualDate = formatDate(firstDate)
+        assertEquals(expectedDate,actualDate)
+    }
+
+    private fun formatDate(date: Date, format: String = DateUtil.DD_MM_YYYY) : String?{
+        return DateUtil.formatDateToString(date,format )
+    }
 }
