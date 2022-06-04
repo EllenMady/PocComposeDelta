@@ -87,7 +87,7 @@ object LoginUtil {
     fun setTypeUserLogged(context: Context,typeUserP:TypeUserEnum? = null){
         PreferencesUtil.also { pref ->
             typeUserP?.let {
-                pref.setString(context = context,typeUserP.description,typeUser)
+                pref.setString(context = context,typeUserP.desc,typeUser)
             }?: pref.setString(context,"",typeUser)
         }
     }
@@ -101,10 +101,8 @@ object LoginUtil {
 
     fun getTypeUserLoggged(context: Context): TypeUserEnum? {
         PreferencesUtil.also {
-            val typeUserIDSession:String = it.getString(context,typeUser)
-            //TODO See how enum works at iOS
-            val typeUserEnum:TypeUserEnum? = null //TypeUserEnum.getEnum(id: Int(typeUserIDSession ?? "0") ?? 0)
-            return typeUserEnum
+            val typeUserIDSession: String = it.getString(context, typeUser, defaultValue = "0")
+            return TypeUserEnum.Find.getEnum(typeUserIDSession.toInt())
         }
     }
 

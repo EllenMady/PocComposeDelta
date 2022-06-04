@@ -25,32 +25,24 @@ object DateUtil {
     const val DD_MM_YYYY = "dd/MM/yyyy"
     const val DD_MM_YYYY_HH_MM_SS = "dd/MM/yyyy HH:mm:ss"
 
-    private val nameMonths =
-            listOf(
+    fun getString(idRes: Int): String{
+       return LocalUtil.getString(idRes)
+    }
+
+    fun getMonthListAsString() : List<String>{
+        return listOf(
                 getString(RStr.jan) , getString(RStr.fev), getString(RStr.mar),
                 getString(RStr.apr), getString(RStr.may), getString(RStr.june),
                 getString(RStr.july), getString(RStr.aug), getString(RStr.sept),
                 getString(RStr.oct), getString(RStr.nov), getString(RStr.dec)
             )
-
-
-    private val nameDays =
-            listOf(
-                getString(RStr.sun),getString(RStr.mon),getString(RStr.tue),getString(RStr.wed),
-                getString(RStr.thu),getString(RStr.fri),getString(RStr.sat)
-            )
-
-
-    internal fun getString(idRes: Int): String{
-       return LocalUtil.getString(idRes)
-    }
-
-    fun getMonthListAsString() : List<String>{
-        return nameMonths
     }
 
     fun getDaysOfWeekListAsString(): List<String>{
-        return nameDays
+        return listOf(
+            getString(RStr.sun),getString(RStr.mon),getString(RStr.tue),getString(RStr.wed),
+            getString(RStr.thu),getString(RStr.fri),getString(RStr.sat)
+        )
     }
 
     fun formaterToFilterReports(date: Date?): String?{
@@ -59,13 +51,16 @@ object DateUtil {
         }
     }
     private fun getCurrentTimeZone() = TimeZone.getDefault()
-    private fun getExtenso() = getString(RStr.date_util_de_extenso)
+    fun getExtenso() : String {
+        return getString(RStr.date_util_de_extenso)
+    }
     fun formatDateToReceipt(date: Date?, language: String? = null) : String{
         return date?.let { it ->
             val locale = language ?: LocalUtil.getLanguage()
+            val extenso = getExtenso()
             if(locale == PT || locale == ES){
-                "${formatDateToString(date = it,format = DAY_FORMAT)}${getExtenso()}"
-                    .plus("${formatDateToString(date = it,format = M_FORMAT)}${getExtenso()}${formatDateToString(date = it,format = YEAR_FORMAT)}")
+                "${formatDateToString(date = it,format = DAY_FORMAT)}$extenso"
+                    .plus("${formatDateToString(date = it,format = M_FORMAT)}$extenso${formatDateToString(date = it,format = YEAR_FORMAT)}")
             }else{
                 "${formatDateToString(date = it, format = M_FORMAT)} ${formatDateToString(it,
                     DAY_FORMAT)},${formatDateToString(date = it,format = YEAR_FORMAT)}"

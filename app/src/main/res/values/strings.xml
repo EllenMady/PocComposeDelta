@@ -30,4 +30,8 @@
     <!-- -->
     <string name="date_util_de_extenso">DateUtil_de_extenso</string>
     <string name="administrator">Administrator</string>
+    <string name="TypeUserEnum_ADMIN">admin</string>
+    <string name="TypeUserEnum_PARTNER">partner</string>
+    <string name="TypeUserEnum_VENDOR">vendor</string>
+
 </resources>
