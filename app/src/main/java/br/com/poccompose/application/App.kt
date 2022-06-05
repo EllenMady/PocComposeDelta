@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 
 import dagger.hilt.android.HiltAndroidApp
 
-//@HiltAndroidApp
+@HiltAndroidApp
 open class App : Application() {
     companion object{
         fun getInstance() = App()

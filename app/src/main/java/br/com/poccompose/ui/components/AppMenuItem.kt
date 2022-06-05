@@ -15,10 +15,11 @@ import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun AppMenuItem(
-    text: String
+    text: String,
+    onClick: () -> Unit,
 ){
    Button(
-       onClick = { /*TODO*/ },
+       onClick = onClick ,
         Modifier.fillMaxWidth()
        ) {
        Box{
@@ -39,5 +40,7 @@ fun AppMenuItem(
 
 @Composable
 fun ColumnScope.addMenuItem(){
-    AppMenuItem("Option One")
+    AppMenuItem("Option One"){
+
+    }
 }
