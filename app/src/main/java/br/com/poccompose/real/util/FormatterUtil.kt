@@ -2,7 +2,6 @@ package br.com.poccompose.real.util
 
 import br.com.poccompose.real.extensions.truncate
 import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.Normalizer
 import java.text.NumberFormat
