@@ -4,11 +4,12 @@ import br.com.poccompose.real.extensions.truncate
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.Normalizer
 import java.text.NumberFormat
 import java.util.*
 
+private val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
 object FormatterUtil {
-
 
     fun formaterToMoney(value: Double): String{ // 10.00
         val valueTrunc = value.truncate(places= 2)
@@ -52,9 +53,8 @@ object FormatterUtil {
         return formatter.maximumFractionDigits == 0
     }
 
-    //TODO o que é pra fazer aqui
-    fun formaterToMoneyWithSignWithoutCents(value: Double): String{  // $10 formatar o valor de acordo com o locale configurado
-        val decimalFormat = DecimalFormatSymbols(Locale.getDefault())
+    fun formaterToMoneyWithSignWithoutCents(value: Double, locale: Locale = Locale.getDefault()): String{  // $10 formatar o valor de acordo com o locale configurado
+        val decimalFormat = DecimalFormatSymbols(locale)
         with(getCurrencyFormat()){
             roundingMode = RoundingMode.DOWN
             maximumFractionDigits = 0
@@ -62,13 +62,12 @@ object FormatterUtil {
         }
     }
 
-    //TODO ?
     fun formaterPercentTextField(str:String): String {
         if(str.trim() == ""){
             return "0.00"
         }
         val auxInt:Int = str.replace(".", "").toInt()
-        val auxArray = arrayOf(auxInt.toString())
+        val auxArray = auxInt.toString().toCharArray()
         if (auxInt == 0) {
             return "0.00"
         }
@@ -80,17 +79,17 @@ object FormatterUtil {
         }
 
         if(auxInt < 1000){
-            return  auxArray[0] + "." + auxArray[1] + auxArray[2]
+            return  "${auxArray[0]}.${auxArray[1]}${auxArray[2]}"
         }
 
         if(auxInt < 10000){
-            return  auxArray[0] + auxArray[1] + "." + auxArray[2] + auxArray[3]
+            return  "${auxArray[0]}${auxArray[1]}.${auxArray[2]}${auxArray[3]}"
         }
 
         if(auxInt < 100000){
-            return  auxArray[0] + auxArray[1] + auxArray[2] + "." + auxArray[3] + auxArray[4]
+            return "${auxArray[0]}${auxArray[1]}${auxArray[2]}.${auxArray[3]}${auxArray[4]}"
         }
-        return auxArray[0] + auxArray[1] + auxArray[2] + auxArray[3] + "." + auxArray[4] + auxArray[5]
+        return "${auxArray[0]}${auxArray[1]}${auxArray[2]}${auxArray[3]}.${auxArray[4]}${auxArray[5]}"
     }
 
     fun formaterCellPhone(phone:String): String{
@@ -99,8 +98,12 @@ object FormatterUtil {
     }
 
     fun removeSpecialCharsFromString(text: String) : String { // retira caracteres especiais e acentos das palavras
-        val regex = Regex("[^A-Za-z0-9 ]")
-        return regex.replace(text,"")
+        return text.unaccent()
     }
 
+}
+
+fun CharSequence.unaccent(): String {
+    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+    return REGEX_UNACCENT.replace(temp, "")
 }
