@@ -6,14 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import br.com.poccompose.ui.components.navigation.MainDestinations
 import br.com.poccompose.ui.components.navigation.addMainNavigationGraph
-import br.com.poccompose.ui.screen.MenuScreen
-import br.com.poccompose.ui.screen.ProductsScreen
-import br.com.poccompose.ui.screen.ReportsScreen
-import br.com.poccompose.ui.screen.SalesScreen
 
 
 @Composable

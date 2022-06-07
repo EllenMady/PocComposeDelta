@@ -1,5 +1,6 @@
 package br.com.poccompose.ui.components.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable

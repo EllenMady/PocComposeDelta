@@ -2,8 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.poccompose">
     <!-- Require permission to use camera -->
-    <uses-feature android:name="android.hardware.camera.any"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <queries>
+        <package android:name="com.whatsapp" />
+    </queries>
+
     <application
         android:name=".application.App"
         android:allowBackup="true"
@@ -12,6 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PocCompose">
+        <activity
+            android:name=".ui.DemoCameraXActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,7 +34,4 @@
         </activity>
     </application>
 
-    <queries>
-        <package android:name="com.whatsapp"/>
-    </queries>
 </manifest>

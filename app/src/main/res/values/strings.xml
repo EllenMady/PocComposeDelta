@@ -33,5 +33,6 @@
     <string name="TypeUserEnum_ADMIN">admin</string>
     <string name="TypeUserEnum_PARTNER">partner</string>
     <string name="TypeUserEnum_VENDOR">vendor</string>
+    <string name="permission_denied">Permission Denied!</string>
 
 </resources>

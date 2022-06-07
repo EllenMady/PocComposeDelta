@@ -2,8 +2,12 @@ package br.com.poccompose.ui.screen
 
 import android.content.Intent
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -12,13 +16,17 @@ import br.com.poccompose.real.util.EmailDetail
 import br.com.poccompose.real.util.EmailUtil
 import br.com.poccompose.real.util.WhatsAppUtil
 import br.com.poccompose.ui.components.AppMenuItem
+import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MenuScreen(
     modifier: Modifier = Modifier
 ){
     val context = LocalContext.current
+    val bottomSheetModalState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val coroutineScope = rememberCoroutineScope()
     Box(modifier
         .fillMaxSize()
         .padding(start = 8.dp, end = 8.dp)){
@@ -52,8 +60,14 @@ fun MenuScreen(
                     val valdd = ""
                 }
             }
-            AppMenuItem(text = "Option Three"){
-
+            AppMenuItem(text = "Picture"){
+                coroutineScope.launch {
+                    if(bottomSheetModalState.isVisible){
+                        bottomSheetModalState.hide()
+                    }else{
+                        bottomSheetModalState.show()
+                    }
+                }
             }
         }
     }
