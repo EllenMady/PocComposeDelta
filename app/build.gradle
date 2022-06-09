@@ -7,9 +7,9 @@ plugins {
 
 android {
     compileSdk 31
-//applicationId "br.com.poccompose"
     defaultConfig {
-        applicationId = "br.com.transferr.driver"
+        //applicationId = "br.com.transferr.driver"
+        applicationId "br.com.poccompose"
         minSdk 27
         targetSdk 31
         versionCode 1

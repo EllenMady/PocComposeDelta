@@ -79,6 +79,13 @@ fun MenuScreen(
             AppMenuItem(text = "Avaliar app") {
                 RedirectUtil.redirectToReviewPlayStore(context)
             }
+
+            AppMenuItem(text = "Youtube") {
+                RedirectUtil.redirectToYoutubeTutorials(context)
+            }
+            AppMenuItem(text = "Redirect to any URL") {
+                RedirectUtil.redirectToUrl("https://stackoverflow.com/questions/35707819/is-there-a-less-ugly-way-to-return-function-in-kotlin",context)
+            }
         }
     }
 }

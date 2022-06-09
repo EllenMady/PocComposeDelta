@@ -1,14 +1,16 @@
 package br.com.poccompose.real.util
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import br.com.poccompose.application.App
 import br.com.poccompose.real.extensions.getActivity
 import com.google.android.play.core.review.ReviewManagerFactory
+import java.util.*
+
 
 object RedirectUtil {
 
@@ -30,9 +32,10 @@ object RedirectUtil {
      * Do not use this method
      */
     fun redirectToReviewPlayStore(context: Context){
+        val packageName = context.packageName
         context.startActivity(
             Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("market://details?id=br.com.transferr.driver")
+                data = Uri.parse("market://details?id=$packageName")
                 setPackage("com.android.vending")
                 addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
                         Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
@@ -84,7 +87,7 @@ object RedirectUtil {
         redirectToWhatsapp(phone,null,context)
     }
 
-    fun redirectToWhatsappWithMensageError(activity: AppCompatActivity?, text:String?, phone:Long, alertMessage:String, context: Context = App.getInstance()) : String?{
+    fun redirectToWhatsappWithMensageError(text:String?, phone:Long, alertMessage:String, context: Context = App.getInstance()) : String?{
         return try{
             if(isDeviceWithWhatsApp(context.packageManager)) {
                 redirectToWhatsapp(phone, text, context)
@@ -105,5 +108,28 @@ object RedirectUtil {
             e.printStackTrace()
             false
         }
+    }
+
+    fun redirectToYoutubeTutorials(context: Context, locale: Locale = Locale.getDefault()) {
+        val urlYoutube = when (locale.language) {
+            PT -> "https://www.youtube.com/playlist?list=PL2J4xYmMXLHSr5m0oFASw12FQUCnaEzOo"
+            ES -> "https://www.youtube.com/playlist?list=PL2J4xYmMXLHTKOD0cIB71SNnkfD3LGS01"
+            else -> "https://www.youtube.com/playlist?list=PL2J4xYmMXLHRAM3DCP33odDeOmQGjxHL1"
+        }
+        val uri = Uri.parse(urlYoutube)
+        val intentForApp = Intent(Intent.ACTION_VIEW).apply {
+            data = uri
+            setClassName("com.google.android.youtube", "com.google.android.youtube.app.froyo.phone.PlaylistActivity");
+        }
+        val intentForWeb = Intent(Intent.ACTION_VIEW,uri)
+        try {
+            context.startActivity(intentForApp)
+        }catch (e : ActivityNotFoundException){
+            context.startActivity(intentForWeb)
+        }
+    }
+
+    fun redirectToUrl(url:String, context: Context = App.getInstance()){
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 }
