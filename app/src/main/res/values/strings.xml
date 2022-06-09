@@ -35,4 +35,13 @@
     <string name="TypeUserEnum_VENDOR">vendor</string>
     <string name="permission_denied">Permission Denied!</string>
 
+    <!-- For notifications -->
+    <string name="default_channel">default</string>
+    <string name="default_channel_description">default notifications</string>
+    <string name="warning">WARNING</string>
+    <string name="you_need_active_subscription">You need an active subscription to receive data from other users!</string>
+    <string name="error_server_occurred">An error has occurred and your data is not being sent to the server. Click to check now.</string>
+    <string name="expired_subscription">Expired Subscription!</string>
+    <string name="you_need_to_update_your_app">You need to update your app to receive data from other users!</string>
+
 </resources>

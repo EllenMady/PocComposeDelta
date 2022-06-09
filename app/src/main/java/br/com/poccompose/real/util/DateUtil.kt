@@ -447,6 +447,10 @@ object DateUtil {
         }
     }
 
+    fun formatSqliteToModelMil(date: String?) :Date?{
+        return formatStringToDate(date= date, format = formaterToDatabaseWithMil)
+    }
+
     fun firstDayOfThisMonth(date: Date) : Int{
         return 0
     }

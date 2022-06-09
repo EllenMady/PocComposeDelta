@@ -6,10 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import br.com.poccompose.real.util.LocalNotificationUtil
+import br.com.poccompose.real.util.RedirectUtil
 import br.com.poccompose.ui.screen.AppMainScreen
 import br.com.poccompose.ui.theme.PocComposeTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.concurrent.timerTask
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,6 +30,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
     }
 
 }

@@ -116,7 +116,7 @@ object LoginUtil {
         }
     }
 
-    fun getNameLogged (context: Context,) : String{
+    fun getNameLogged (context: Context) : String{
         if(isLogged(context)) {
             val userLocal = UserLocal.findByIdSeq(getSeqUser(context).toInt())
             if (userLocal?.typeUser == UserLocalTypeEnum.ADMIN) {

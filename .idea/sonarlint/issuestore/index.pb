@@ -1,6 +1,4 @@
 
-n
->app/src/main/java/br/com/poccompose/ui/screen/ReportsScreen.kt,b/3/b389b9e2aa94e703d08b09e11dcfc3c6dba0397d
 l
 <app/src/main/java/br/com/poccompose/ui/screen/SalesScreen.kt,a/a/aa0f94e83b058a8d3e8a680287c6fadc1a609918
 O
@@ -11,10 +9,6 @@ t
 Dapp/src/main/java/br/com/poccompose/ui/components/NavClientRoutes.kt,7/0/7071bbef8d9a2edfc4b2c76950fb369030a52ef3
 t
 Dapp/src/main/java/br/com/poccompose/ui/components/AppButtonSemple.kt,f/5/f532be68b864aaedb23156fa574712fb39654b70
-f
-6app/src/main/java/br/com/poccompose/application/App.kt,6/2/62b0c872a261c43809a31a90cd1691aec0b2120f
-n
->app/src/main/java/br/com/poccompose/ui/screen/ProductScreen.kt,7/1/719eabbcd2929e34799d152c5b15c3ef470a1988
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

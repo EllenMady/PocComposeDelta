@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import br.com.poccompose.real.util.EmailDetail
 import br.com.poccompose.real.util.EmailUtil
+import br.com.poccompose.real.util.RedirectUtil
 import br.com.poccompose.real.util.WhatsAppUtil
 import br.com.poccompose.ui.components.AppMenuItem
 import kotlinx.coroutines.launch
@@ -27,9 +28,10 @@ fun MenuScreen(
     val context = LocalContext.current
     val bottomSheetModalState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
-    Box(modifier
-        .fillMaxSize()
-        .padding(start = 8.dp, end = 8.dp)){
+    Box(
+        modifier
+            .fillMaxSize()
+            .padding(start = 8.dp, end = 8.dp)){
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,11 +52,12 @@ fun MenuScreen(
                  */
                 context.startActivity(emailIntent)
             }
-            AppMenuItem(text = "Option Two"){
+            AppMenuItem(text = "Option Whats app"){
 
                 if(WhatsAppUtil.isDeviceWith(packageManager = context.packageManager)) {
-                    val whatsAppIntent = WhatsAppUtil.getWhatsAppIntent("Message OK mano")
-                    context.startActivity(whatsAppIntent)
+//                    val whatsAppIntent = WhatsAppUtil.getWhatsAppIntent("Message OK mano")
+//                    context.startActivity(whatsAppIntent)
+                    RedirectUtil.redirectToWhatsapp(558587698064,"Ola bb",context)
                 }else{
                     //No zap here
                     val valdd = ""
@@ -68,6 +71,13 @@ fun MenuScreen(
                         bottomSheetModalState.show()
                     }
                 }
+            }
+            AppMenuItem(text = "Show at app store") {
+                RedirectUtil.redirectToAppStore(context)
+            }
+
+            AppMenuItem(text = "Avaliar app") {
+                RedirectUtil.redirectToReviewPlayStore(context)
             }
         }
     }

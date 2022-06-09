@@ -1,12 +1,16 @@
 package br.com.poccompose.real.util
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.util.Base64
-import androidx.compose.ui.graphics.ImageBitmap
 import br.com.poccompose.R
 import br.com.poccompose.application.App
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import java.io.ByteArrayOutputStream
 
 object ImageUtil {
@@ -31,20 +35,20 @@ object ImageUtil {
         }
     }
 
-    /*
-    //TODO usar lib coil
-    class func imageFromUrl(url:String) -> UIImage {
-        let url = URL(string:url)
-        let data = try? Data(contentsOf: url!)
-        if(data == nil){
-            let imageUI: UIImage = UIImage(named: "NoImage")!
-            return imageUI
-        }else{
-            let imageUI: UIImage = UIImage(data: data!)!
-            return imageUI
-        }
-    }
+    /**
+    Use Coroutine to use async function
+     important: Do not use it in Compose, prefer ImageFromUrl from component.AppImageLoader
      */
+    suspend fun imageFromUrl(url:String, context: Context = App.getInstance()): Bitmap {
+        val loader = ImageLoader(context)
+        val request = ImageRequest.Builder(context)
+            .data(url)
+            .allowHardware(false)
+            .error(R.drawable.ic_no_image)
+            .build()
+        val result = (loader.execute(request) as SuccessResult).drawable
+        return (result as BitmapDrawable).bitmap
+    }
 
     fun getImageFromResources(resources: Resources, idRes: Int): Bitmap{
         return BitmapFactory.decodeResource(resources, idRes)

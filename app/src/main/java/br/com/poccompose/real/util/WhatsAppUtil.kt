@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 
 const val WHATS_APP_PACKAGE = "com.whatsapp"
+@Deprecated("Use RedirectUtil")
 object WhatsAppUtil {
 
     fun getWhatsAppIntent(message: String) : Intent{
