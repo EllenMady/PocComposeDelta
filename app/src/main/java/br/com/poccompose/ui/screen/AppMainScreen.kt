@@ -1,29 +1,19 @@
 package br.com.poccompose.ui.screen
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import br.com.poccompose.ui.components.AppBottomBar
-import br.com.poccompose.ui.components.AppNavHost
-import br.com.poccompose.ui.components.NavBarOptions
+import br.com.poccompose.ui.components.*
+import br.com.poccompose.ui.components.navigation.NavBarOptions
 
 
 @Composable
 fun AppMainScreen(){
-    /*
-    ----------------------------------------------------------------------------------------------------------
-    NavController é a API central do componente Navigation. É uma função com estado que acompanha a
-    pilha de funções que podem ser compostas, as quais, por sua vez, criam as telas do app e o estado de cada tela.
-    É possível criar um NavController usando o método rememberNavController() na função que pode ser composta
-    ----------------------------------------------------------------------------------------------------------
-     */
-    val navController = rememberNavController()
+
+//    val navController = rememberNavController()
     /*
     OBS @ ->
     Na hierarquia de funções que podem ser compostas, crie o NavController em um local onde todas as funções que
@@ -35,16 +25,32 @@ fun AppMainScreen(){
     val bottomBar = remember {
         mutableStateOf<NavBarOptions>(NavBarOptions.Products)
     }
-    val scaffoldState = rememberScaffoldState()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val appState = rememberAppState()
+    val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
     Scaffold(
-        scaffoldState = scaffoldState,
+        scaffoldState = appState.scaffoldState,
         topBar = {
-            //Here comes the app top bar
+            AppTopBar(
+                titleRes = appState.titleState.value,
+                showBackButton = !appState.shouldShowBottomBar,
+                backPress = appState::backPress,
+                actions = appState.topActions.value,
+                appState = appState
+            )
         },
         bottomBar = {
+            //---------------------------------
             //Her is the navigation bottom bar
-            navBackStackEntry?.let { AppBottomBar(navController = navController, navBackStackEntry = it) }
+            //---------------------------------
+            val show = appState.shouldShowBottomBar
+            if(show) {
+                navBackStackEntry?.let {
+                    AppBottomBar(
+                        navController = appState.navController,
+                        navBackStackEntry = it
+                    )
+                }
+            }
         },
         floatingActionButton = {
             //If you nee to put a float bottom
@@ -54,7 +60,8 @@ fun AppMainScreen(){
         }
     ) { innerPadding ->
         AppNavHost(
-            navHostController = navController,
+            appState,
+            navHostController = appState.navController,
             paddingValues = innerPadding)
     }
 }

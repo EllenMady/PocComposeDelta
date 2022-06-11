@@ -2,14 +2,10 @@ package br.com.poccompose.ui.components
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
@@ -17,6 +13,9 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import br.com.poccompose.ui.components.navigation.MainDestinations
+import br.com.poccompose.ui.components.navigation.NavBarOptionObject
+import br.com.poccompose.ui.components.navigation.NavBarOptions
+import br.com.poccompose.ui.theme.*
 
 
 @Composable
@@ -27,6 +26,7 @@ fun AppBottomBar(
 ){
     val currentDestination = navBackStackEntry.destination
     BottomNavigation(
+        backgroundColor = MaterialTheme.colors.surface,
         elevation = 3.dp,
         modifier = modifier
             .fillMaxWidth()
@@ -47,19 +47,31 @@ fun RowScope.AddItem(
     currentDestination: NavDestination,
     navHostController: NavHostController
 ){
+
+    val selectedColor = when(barOption.getRoute()){
+        NavBarOptions.Clients.getRoute() -> ClientsColor
+        NavBarOptions.Sales.getRoute() -> SalesColor
+        NavBarOptions.Products.getRoute() -> ProductColor
+        NavBarOptions.Reports.getRoute() -> ReportsColor
+        NavBarOptions.Menu.getRoute() -> MenuColor
+        else -> MaterialTheme.colors.primary
+    }
     BottomNavigationItem(
         label = {
                 Text(
-                    text = stringResource(id = barOption.title),
+                    text = stringResource(id = barOption.getTitle()),
                     fontSize = 10.sp
                 )
         },
         selected = currentDestination.hierarchy.any{ navDestination ->
-           navDestination.route == barOption.route
+           navDestination.route == barOption.getRoute()
         },
         icon = {
-               Icon(imageVector = barOption.icon, contentDescription = stringResource(id = barOption.title))
+               Icon(imageVector = barOption.icon, contentDescription = stringResource(id = barOption.getTitle()))
         },
+        selectedContentColor = selectedColor,
+        unselectedContentColor = selectedColor.copy(0.2f)
+        ,
         onClick = {
             /*
             No gráfico de navegação, use o método navigate() para navegar até um destino
@@ -67,7 +79,7 @@ fun RowScope.AddItem(
             a rota do destino. Para navegar de um destino dentro do gráfico de navegação,
             chame navigate():
              */
-            navHostController.navigate(barOption.route){
+            navHostController.navigate(barOption.getRoute()){
                 launchSingleTop = true
                 /*
                 popUpTo MAIN_ROUTE faz com que em qualquer item de menu, o mesmo fecha o app ao clicar no botao de back

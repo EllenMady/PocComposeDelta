@@ -43,5 +43,6 @@
     <string name="error_server_occurred">An error has occurred and your data is not being sent to the server. Click to check now.</string>
     <string name="expired_subscription">Expired Subscription!</string>
     <string name="you_need_to_update_your_app">You need to update your app to receive data from other users!</string>
+    <string name="client_detail_title">Client Detail</string>
 
 </resources>

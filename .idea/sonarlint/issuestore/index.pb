@@ -6,8 +6,6 @@ O
 d
 4app/src/main/java/br/com/poccompose/ui/NotesToSee.kt,5/d/5d9f4f7c9cc68b5b7e9112ad085a76814a562fc1
 t
-Dapp/src/main/java/br/com/poccompose/ui/components/NavClientRoutes.kt,7/0/7071bbef8d9a2edfc4b2c76950fb369030a52ef3
-t
 Dapp/src/main/java/br/com/poccompose/ui/components/AppButtonSemple.kt,f/5/f532be68b864aaedb23156fa574712fb39654b70
 :
 
@@ -18,3 +16,23 @@ r
 Bapp/src/test/java/br/com/poccompose/real/util/FormatterUtilTest.kt,a/c/ac4abb9889d3732eeeb84da89693c4d9f7542fe7
 n
 >app/src/main/java/br/com/poccompose/real/util/FormatterUtil.kt,b/6/b6e0a66017cf747a19ea773d99ea25d974f01280
+q
+Aapp/src/main/java/br/com/poccompose/real/extensions/ContextExt.kt,b/f/bff45f8c7f33aa05bfd9f705957b4cc0fbe5dbca
+p
+@app/src/main/java/br/com/poccompose/real/extensions/DoubleExt.kt,6/7/6761c7a266a7d1fea1bef8d92506e53fdb9c1e37
+j
+:app/src/main/java/br/com/poccompose/real/util/EmailUtil.kt,c/7/c71bd34f3f665ea2b5e098ace14c3554ad2f9421
+j
+:app/src/main/java/br/com/poccompose/real/util/Constants.kt,1/1/119c6cd15a1159e61d6b2d18884e43321e2786c9
+r
+Bapp/src/main/java/br/com/poccompose/real/extensions/ActivityExt.kt,d/9/d9103e2db6b322e99eedd24489724c667043e8d7
+m
+=app/src/main/java/br/com/poccompose/real/util/RedirectUtil.kt,f/e/fec1b1cef2a5b30becf58e67bf3210ef7879b3c1
+m
+=app/src/main/java/br/com/poccompose/real/util/WhatsAppUtil.kt,8/3/8330381a55e0b834d5defdba886b8167c9c15701
+t
+Dapp/src/main/java/br/com/poccompose/repositories/ClientRepository.kt,a/9/a94ab6e0d0b16ac2b8989e39e40f4fa3e8bcada4
+e
+5app/src/main/java/br/com/poccompose/ui/theme/Theme.kt,4/4/44670e13d93daab0927770a613685330ce624658
+n
+>app/src/main/java/br/com/poccompose/real/enums/TypeUserEnum.kt,9/3/93c75affafdf535cf6338a1df72d79f03c51831a

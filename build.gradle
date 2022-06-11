@@ -12,6 +12,8 @@ buildscript {
         store_version = '1.0.0'
         camera_version = '1.0.1'
         work_version = '2.7.1'
+        coil_version = '2.1.0'
+        review_version = '2.0.0'
     }
     repositories {
         google()

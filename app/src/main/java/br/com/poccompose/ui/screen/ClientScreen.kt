@@ -1,6 +1,5 @@
 package br.com.poccompose.ui.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -8,20 +7,20 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import br.com.poccompose.real.util.PreferencesUtil
+import androidx.hilt.navigation.compose.hiltViewModel
 import br.com.poccompose.ui.components.AppButtonSample
+import br.com.poccompose.ui.components.AppState
 import br.com.poccompose.ui.components.ImageFromUrl
+import br.com.poccompose.ui.components.navigation.NavClientRoutes
 import br.com.poccompose.viewmodels.ClientViewModel
-import coil.compose.rememberImagePainter
 
 
 @Composable
 fun ClientScreen(
-    viewModel: ClientViewModel,
-    modifier: Modifier = Modifier
+    viewModel: ClientViewModel = hiltViewModel(),
+    appState: AppState,
+    modifier: Modifier = Modifier,
 ){
     /*
     No compose, um estado é tudo que pode mudar em uma tela
@@ -77,12 +76,11 @@ fun ClientScreen(
                 url = "https://images.theconversation.com/files/443350/original/file-20220131-15-1ndq1m6.jpg?ixlib=rb-1.1.0&rect=0%2C0%2C3354%2C2464&q=45&auto=format&w=926&fit=clip",
                 modifier = Modifier.size(100.dp)
             )
+            Button(onClick = {
+                appState.navController.navigate(NavClientRoutes.ClientDetail.getRoute())
+            }) {
+                Text(text = "Client detail")
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun ClientsPreview(){
-    ClientScreen(viewModel())
 }

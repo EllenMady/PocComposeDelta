@@ -4,15 +4,19 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import br.com.poccompose.ui.components.navigation.MainDestinations
-import br.com.poccompose.ui.components.navigation.addMainNavigationGraph
+import br.com.poccompose.ui.components.navigation.*
+import br.com.poccompose.viewmodels.ClientDetailViewModel
 
 
 @Composable
 fun AppNavHost(
+    appState: AppState,
     navHostController: NavHostController,
     paddingValues: PaddingValues,
     modifier : Modifier = Modifier
@@ -44,11 +48,22 @@ fun AppNavHost(
         precisa ter uma rota exclusiva.
          */
         navigation(
-            startDestination = NavBarOptions.Products.route,
+            startDestination = NavBarOptions.Products.getRoute(),
             route = MainDestinations.MAIN_ROUTE
         ){
-            addMainNavigationGraph()
+            addMainNavigationGraph(appState)
+            addClientNavigation(appState)
         }
+    }
+}
+
+fun NavGraphBuilder.addRoute(appState: AppState, routable: Routable){
+    composable(
+        route= routable.getRoute(),
+    ){
+        appState.topActions.value = routable.getActions(appState)
+        appState.titleState.value = routable.getTitle()
+        routable.GetContent(appState)
     }
 }
 
