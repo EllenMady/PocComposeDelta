@@ -2,7 +2,7 @@ package br.com.poccompose.ui.components.navigation
 
 import androidx.compose.runtime.Composable
 import br.com.poccompose.ui.components.AppState
-import br.com.poccompose.ui.components.TopBarAction
+import br.com.poccompose.ui.components.objects.TopBarAction
 
 
 interface Routable{

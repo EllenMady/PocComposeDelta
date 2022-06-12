@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.poccompose.R
+import br.com.poccompose.ui.components.objects.MenuItemObject
+import br.com.poccompose.ui.components.objects.MenuSessionObject
 
 @Composable
 fun AppMenuSession(

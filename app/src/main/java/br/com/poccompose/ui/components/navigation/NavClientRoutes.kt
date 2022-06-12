@@ -2,14 +2,11 @@ package br.com.poccompose.ui.components.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import br.com.poccompose.R
 import br.com.poccompose.ui.components.AppState
-import br.com.poccompose.ui.components.TopBarAction
+import br.com.poccompose.ui.components.objects.TopBarAction
 import br.com.poccompose.ui.screen.client.ClientDetail
 import br.com.poccompose.viewmodels.ClientDetailViewModel
-import br.com.poccompose.viewmodels.ClientViewModel
-import kotlin.reflect.KClass
 
 sealed class NavClientRoutes(
 

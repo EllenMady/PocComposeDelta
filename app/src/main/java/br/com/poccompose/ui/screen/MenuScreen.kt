@@ -1,7 +1,5 @@
 package br.com.poccompose.ui.screen
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import br.com.poccompose.R
 import br.com.poccompose.ui.components.AppMenuSession
 import br.com.poccompose.ui.components.AppState
-import br.com.poccompose.ui.components.MenuItemObject
-import br.com.poccompose.ui.components.MenuSessionObject
+import br.com.poccompose.ui.components.objects.MenuItemObject
+import br.com.poccompose.ui.components.objects.MenuSessionObject
 
 
 @Composable

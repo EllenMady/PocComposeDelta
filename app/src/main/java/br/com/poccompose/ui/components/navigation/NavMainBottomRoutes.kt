@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import br.com.poccompose.R
 import br.com.poccompose.real.enums.IconTypeEnum
 import br.com.poccompose.ui.components.AppState
-import br.com.poccompose.ui.components.TopBarAction
+import br.com.poccompose.ui.components.objects.TopBarAction
 import br.com.poccompose.ui.screen.*
 import br.com.poccompose.viewmodels.ProductsViewModel
 

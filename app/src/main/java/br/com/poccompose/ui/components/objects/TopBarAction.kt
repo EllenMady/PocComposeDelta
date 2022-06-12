@@ -1,4 +1,4 @@
-package br.com.poccompose.ui.components
+package br.com.poccompose.ui.components.objects
 
 import br.com.poccompose.real.enums.IconTypeEnum
 
