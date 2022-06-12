@@ -114,6 +114,11 @@ dependencies {
     //For review
     //--------------------------------------------------------
     implementation("com.google.android.play:review-ktx:$review_version")
+    //--------------------------------------------------------
+    //Material icons
+    //--------------------------------------------------------
+    runtimeOnly("androidx.compose.material:material-icons-extended:1.1.1")
+
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-inline:$mockito_version"

@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.poccompose.R
-import br.com.poccompose.ui.components.navigation.NavBarOptions
+import br.com.poccompose.ui.components.navigation.NavMainBottomRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -82,11 +82,11 @@ class AppState(
     // ----------------------------------------------------------
     //val bottomBarTabs = HomeSections.values()
     private val bottomBarRoutes = listOf(
-        NavBarOptions.Products.getRoute(),
-        NavBarOptions.Sales.getRoute(),
-        NavBarOptions.Reports.getRoute(),
-        NavBarOptions.Menu.getRoute(),
-        NavBarOptions.Clients.getRoute()
+        NavMainBottomRoutes.Products.getRoute(),
+        NavMainBottomRoutes.Sales.getRoute(),
+        NavMainBottomRoutes.Reports.getRoute(),
+        NavMainBottomRoutes.Menu.getRoute(),
+        NavMainBottomRoutes.Clients.getRoute()
     )
 
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.
@@ -99,7 +99,7 @@ class AppState(
         val dest = navController.currentBackStackEntryAsState()
             .value?.
             destination?.route
-        return dest ?: NavBarOptions.Products.getRoute()
+        return dest ?: NavMainBottomRoutes.Products.getRoute()
     }
 
     @Composable

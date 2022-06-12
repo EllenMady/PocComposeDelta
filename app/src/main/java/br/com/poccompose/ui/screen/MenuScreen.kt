@@ -1,91 +1,136 @@
 package br.com.poccompose.ui.screen
 
-import android.content.Intent
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import br.com.poccompose.real.util.EmailDetail
-import br.com.poccompose.real.util.EmailUtil
-import br.com.poccompose.real.util.RedirectUtil
-import br.com.poccompose.real.util.WhatsAppUtil
-import br.com.poccompose.ui.components.AppMenuItem
-import kotlinx.coroutines.launch
+import br.com.poccompose.R
+import br.com.poccompose.ui.components.AppMenuSession
+import br.com.poccompose.ui.components.AppState
+import br.com.poccompose.ui.components.MenuItemObject
+import br.com.poccompose.ui.components.MenuSessionObject
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MenuScreen(
+    appState: AppState,
     modifier: Modifier = Modifier
 ){
-    val context = LocalContext.current
-    val bottomSheetModalState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-    val coroutineScope = rememberCoroutineScope()
     Box(
         modifier
             .fillMaxSize()
             .padding(start = 8.dp, end = 8.dp)){
         Column(
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
-            Text(text = "Menu")
-            AppMenuItem(text = "Option One - Send E-mail"){
-                val emailIntent = EmailUtil.getIntent(EmailDetail(
-                    recipient = "bruno_salmito@hotmail.com","Assunto do email","Corpo do email"
-                ))
-                /*
-                O Intent.createChooser é mais usado para compartilhar
-                 */
-                val shareIntent = Intent.createChooser(emailIntent,"title")
-                //context.startActivity(shareIntent)
-                /*
-                Esse abaixo é melhor para mandar só e-mail
-                 */
-                context.startActivity(emailIntent)
-            }
-            AppMenuItem(text = "Option Whats app"){
-
-                if(WhatsAppUtil.isDeviceWith(packageManager = context.packageManager)) {
-//                    val whatsAppIntent = WhatsAppUtil.getWhatsAppIntent("Message OK mano")
-//                    context.startActivity(whatsAppIntent)
-                    RedirectUtil.redirectToWhatsapp(558587698064,"Ola bb",context)
-                }else{
-                    //No zap here
-                    val valdd = ""
-                }
-            }
-            AppMenuItem(text = "Picture"){
-                coroutineScope.launch {
-                    if(bottomSheetModalState.isVisible){
-                        bottomSheetModalState.hide()
-                    }else{
-                        bottomSheetModalState.show()
-                    }
-                }
-            }
-            AppMenuItem(text = "Show at app store") {
-                RedirectUtil.redirectToAppStore(context)
+            for(session in getSessionList()){
+                AppMenuSession(
+                    appState = appState, session= session )
             }
 
-            AppMenuItem(text = "Avaliar app") {
-                RedirectUtil.redirectToReviewPlayStore(context)
-            }
-
-            AppMenuItem(text = "Youtube") {
-                RedirectUtil.redirectToYoutubeTutorials(context)
-            }
-            AppMenuItem(text = "Redirect to any URL") {
-                RedirectUtil.redirectToUrl("https://stackoverflow.com/questions/35707819/is-there-a-less-ugly-way-to-return-function-in-kotlin",context)
-            }
         }
     }
+
+
+}
+
+@Composable
+private fun getSessionList(): List<MenuSessionObject>{
+    val sessionZero = MenuSessionObject(
+        items = listOf(
+            MenuItemObject(
+                title = "Item menu title Zero",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            ),
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            ),
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            )
+        )
+    )
+
+    val sessionOne = MenuSessionObject(
+        title = "Session title One",
+        subTitle = "Session subtitle",
+        items = listOf(
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            ),
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            ),
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            )
+        )
+    )
+    val sessionTwo = MenuSessionObject(
+        title = "Session title Two",
+        subTitle = "Session subtitle",
+        items = listOf(
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            )
+        )
+    )
+    val sessionThree = MenuSessionObject(
+        title = "Session title three",
+        subTitle = "Session subtitle",
+        items = listOf(
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            ),
+            MenuItemObject(
+                title = "Item menu title",
+                subTitle = "Some thing to explain the item",
+                icon = R.drawable.ic_settings_png
+            )
+        )
+    )
+    val sessionFour = MenuSessionObject(
+        title = "Session Four",
+        items = listOf(
+            MenuItemObject(
+                title = "Item menu title",
+                icon = R.drawable.ic_settings_png
+            ),
+            MenuItemObject(
+                title = "Item menu title",
+                icon = R.drawable.ic_settings_png
+            )
+        )
+    )
+    return listOf(
+        sessionZero,
+        sessionOne,
+        sessionTwo,
+        sessionThree,
+        sessionFour
+    )
 }

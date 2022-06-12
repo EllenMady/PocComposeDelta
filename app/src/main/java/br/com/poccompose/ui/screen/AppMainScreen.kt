@@ -1,13 +1,13 @@
 package br.com.poccompose.ui.screen
 
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.navigation.compose.currentBackStackEntryAsState
-import br.com.poccompose.ui.components.*
-import br.com.poccompose.ui.components.navigation.NavBarOptions
+import br.com.poccompose.ui.components.AppBottomBar
+import br.com.poccompose.ui.components.AppNavHost
+import br.com.poccompose.ui.components.AppTopBar
+import br.com.poccompose.ui.components.rememberAppState
 
 
 @Composable
@@ -22,9 +22,6 @@ fun AppMainScreen(){
     para que essa função seja usada como a fonte da verdade para atualizar funções que podem ser compostas fora das telas.
      */
     //--------------------------------------------------------------------------------------------------------
-    val bottomBar = remember {
-        mutableStateOf<NavBarOptions>(NavBarOptions.Products)
-    }
     val appState = rememberAppState()
     val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
     Scaffold(

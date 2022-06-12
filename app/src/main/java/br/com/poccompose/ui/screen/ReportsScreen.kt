@@ -1,6 +1,6 @@
 package br.com.poccompose.ui.screen
 
-import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import br.com.poccompose.R
 import br.com.poccompose.ui.components.AlertError
 
@@ -44,6 +45,7 @@ fun ReportsScreen(
                     idResMessage = R.string.you_need_active_subscription
                 )
             }
+            Image(painter = painterResource(id = R.drawable.ic_product_menu), contentDescription = null)
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -14,7 +15,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import br.com.poccompose.ui.components.navigation.MainDestinations
 import br.com.poccompose.ui.components.navigation.NavBarOptionObject
-import br.com.poccompose.ui.components.navigation.NavBarOptions
+import br.com.poccompose.ui.components.navigation.NavMainBottomRoutes
 import br.com.poccompose.ui.theme.*
 
 
@@ -26,7 +27,7 @@ fun AppBottomBar(
 ){
     val currentDestination = navBackStackEntry.destination
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = backGroundColor,
         elevation = 3.dp,
         modifier = modifier
             .fillMaxWidth()
@@ -43,17 +44,17 @@ fun AppBottomBar(
 
 @Composable
 fun RowScope.AddItem(
-    barOption: NavBarOptions,
+    barOption: NavMainBottomRoutes,
     currentDestination: NavDestination,
     navHostController: NavHostController
 ){
 
     val selectedColor = when(barOption.getRoute()){
-        NavBarOptions.Clients.getRoute() -> ClientsColor
-        NavBarOptions.Sales.getRoute() -> SalesColor
-        NavBarOptions.Products.getRoute() -> ProductColor
-        NavBarOptions.Reports.getRoute() -> ReportsColor
-        NavBarOptions.Menu.getRoute() -> MenuColor
+        NavMainBottomRoutes.Clients.getRoute() -> ClientsColor
+        NavMainBottomRoutes.Sales.getRoute() -> SalesColor
+        NavMainBottomRoutes.Products.getRoute() -> ProductColor
+        NavMainBottomRoutes.Reports.getRoute() -> ReportsColor
+        NavMainBottomRoutes.Menu.getRoute() -> MenuColor
         else -> MaterialTheme.colors.primary
     }
     BottomNavigationItem(
@@ -67,7 +68,7 @@ fun RowScope.AddItem(
            navDestination.route == barOption.getRoute()
         },
         icon = {
-               Icon(imageVector = barOption.icon, contentDescription = stringResource(id = barOption.getTitle()))
+               Icon(painter = painterResource(id = barOption.icon) , contentDescription = stringResource(id = barOption.getTitle()))
         },
         selectedContentColor = selectedColor,
         unselectedContentColor = selectedColor.copy(0.2f)

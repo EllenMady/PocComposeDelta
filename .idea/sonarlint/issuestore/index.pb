@@ -5,8 +5,6 @@ O
 .idea/runConfigurations/app.xml,5/c/5cc66edfd24ccca8e9a40b828f642fef2b9e7e46
 d
 4app/src/main/java/br/com/poccompose/ui/NotesToSee.kt,5/d/5d9f4f7c9cc68b5b7e9112ad085a76814a562fc1
-t
-Dapp/src/main/java/br/com/poccompose/ui/components/AppButtonSemple.kt,f/5/f532be68b864aaedb23156fa574712fb39654b70
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
@@ -32,7 +30,5 @@ m
 =app/src/main/java/br/com/poccompose/real/util/WhatsAppUtil.kt,8/3/8330381a55e0b834d5defdba886b8167c9c15701
 t
 Dapp/src/main/java/br/com/poccompose/repositories/ClientRepository.kt,a/9/a94ab6e0d0b16ac2b8989e39e40f4fa3e8bcada4
-e
-5app/src/main/java/br/com/poccompose/ui/theme/Theme.kt,4/4/44670e13d93daab0927770a613685330ce624658
 n
 >app/src/main/java/br/com/poccompose/real/enums/TypeUserEnum.kt,9/3/93c75affafdf535cf6338a1df72d79f03c51831a
